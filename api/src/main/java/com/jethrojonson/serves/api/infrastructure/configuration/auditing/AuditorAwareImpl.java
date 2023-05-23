@@ -1,4 +1,4 @@
-package com.jethrojonson.serves.api.infrastructure.configuration;
+package com.jethrojonson.serves.api.infrastructure.configuration.auditing;
 
 import com.jethrojonson.serves.api.domain.entities.User;
 import org.springframework.data.domain.AuditorAware;

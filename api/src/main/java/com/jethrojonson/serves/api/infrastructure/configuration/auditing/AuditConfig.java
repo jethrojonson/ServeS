@@ -1,4 +1,4 @@
-package com.jethrojonson.serves.api.infrastructure.configuration;
+package com.jethrojonson.serves.api.infrastructure.configuration.auditing;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

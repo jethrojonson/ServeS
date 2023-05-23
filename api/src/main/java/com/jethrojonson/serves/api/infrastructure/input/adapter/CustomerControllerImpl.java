@@ -13,9 +13,5 @@ public class CustomerControllerImpl {
 
     private final CustomerController customerController;
 
-    @GetMapping("/")
-    public String saludasos(){
-        return customerController.Saludotes();
-    }
 
 }

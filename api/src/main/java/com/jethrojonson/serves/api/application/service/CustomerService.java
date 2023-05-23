@@ -12,8 +12,5 @@ public class CustomerService implements CustomerController {
 
     private final CustomerRepository customerRepository;
 
-    @Override
-    public String Saludotes() {
-       return "HOLA MUNDO";
-    }
+
 }
