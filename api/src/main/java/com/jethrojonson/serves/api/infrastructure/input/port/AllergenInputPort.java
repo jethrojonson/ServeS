@@ -6,13 +6,13 @@ import java.util.List;
 
 public interface AllergenInputPort {
 
-    AllergenResponse addAllergen (AllergenRequest toAdd);
+    AllergenResponse addAllergen (NewAllergenRequest toAdd);
 
     List<AllergenResponse> getAllAllergens();
 
     AllergenResponse getAllergenById(Long allergenId);
 
-    AllergenResponse updateAllergen(Long allergenId, AllergenRequest toUpdate);
+    AllergenResponse updateAllergen(Long allergenId, NewAllergenRequest toUpdate);
 
     void deleteAllergen(Long allergenId);
 

@@ -7,13 +7,13 @@ import javax.validation.constraints.NotEmpty;
 
 public interface AllergenDTO {
 
-    public record AllergenRequest(
+    public record NewAllergenRequest(
             @NotEmpty
             String allergenName,
             @NotEmpty
             String description
     ){
-        public static Allergen toAllergen(AllergenRequest a){
+        public static Allergen toAllergen(NewAllergenRequest a){
             return Allergen.builder()
                     .allergenName(a.allergenName)
                     .description(a.description)
@@ -27,7 +27,7 @@ public interface AllergenDTO {
             String allergenName,
             String description
     ){
-        public static AllergenResponse toAllergenResponse(Allergen a){
+        public static AllergenResponse fromAllergen(Allergen a){
             return AllergenResponse.builder()
                     .id(a.getId())
                     .allergenName(a.getAllergenName())

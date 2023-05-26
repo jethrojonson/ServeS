@@ -1,5 +1,6 @@
 package com.jethrojonson.serves.api.infrastructure.input.adapter;
 
+
 import com.jethrojonson.serves.api.application.dto.AllergenDTO.*;
 import com.jethrojonson.serves.api.infrastructure.input.port.AllergenInputPort;
 import io.swagger.v3.oas.annotations.Operation;
@@ -56,7 +57,7 @@ public class AllergenInputAdapter {
             description = "Input body format",
             content = @Content(
                     mediaType = "application/json",
-                    schema = @Schema(implementation = AllergenRequest.class),
+                    schema = @Schema(implementation = NewAllergenRequest.class),
                     examples = @ExampleObject(
                             value = """
                                     {
@@ -68,7 +69,7 @@ public class AllergenInputAdapter {
             )
     )
     @PostMapping("/")
-    public ResponseEntity<AllergenResponse> addAllergen (@Valid @RequestBody AllergenRequest toAdd){
+    public ResponseEntity<AllergenResponse> addAllergen (@Valid @RequestBody NewAllergenRequest toAdd){
         AllergenResponse added = allergenInputPort.addAllergen(toAdd);
         URI uri = ServletUriComponentsBuilder
                 .fromCurrentRequest()
@@ -184,7 +185,7 @@ public class AllergenInputAdapter {
             description = "Input body format",
             content = @Content(
                     mediaType = "application/json",
-                    schema = @Schema(implementation = AllergenRequest.class),
+                    schema = @Schema(implementation = NewAllergenRequest.class),
                     examples = @ExampleObject(
                             value = """
                                     {
@@ -196,7 +197,7 @@ public class AllergenInputAdapter {
             )
     )
     @PutMapping("/{allergenId}")
-    public ResponseEntity<AllergenResponse> updateAllergen(@PathVariable Long allergenId,@Valid @RequestBody AllergenRequest toUpdate){
+    public ResponseEntity<AllergenResponse> updateAllergen(@PathVariable Long allergenId,@Valid @RequestBody NewAllergenRequest toUpdate){
         return ResponseEntity.ok(allergenInputPort.updateAllergen(allergenId, toUpdate));
     }
 

@@ -16,10 +16,10 @@ public class AllergenUseCase implements AllergenInputPort {
     private final AllergenRepository allergenRepository;
 
     @Override
-    public AllergenResponse addAllergen(AllergenRequest toAdd) {
-        return AllergenResponse.toAllergenResponse(
+    public AllergenResponse addAllergen(NewAllergenRequest toAdd) {
+        return AllergenResponse.fromAllergen(
                 allergenRepository.save(
-                        AllergenRequest.toAllergen(toAdd)
+                        NewAllergenRequest.toAllergen(toAdd)
                 )
         );
     }
@@ -29,24 +29,24 @@ public class AllergenUseCase implements AllergenInputPort {
         if (allergenRepository.findAll().isEmpty())
             throw new EmptyAllergenListException();
         return allergenRepository.findAll().stream()
-                .map(AllergenResponse::toAllergenResponse)
+                .map(AllergenResponse::fromAllergen)
                 .toList();
     }
 
     @Override
     public AllergenResponse getAllergenById(Long allergenId) {
         return allergenRepository.findById(allergenId)
-                .map(AllergenResponse::toAllergenResponse)
+                .map(AllergenResponse::fromAllergen)
                 .orElseThrow(()-> new AllergenNotFoundException(allergenId));
     }
 
     @Override
-    public AllergenResponse updateAllergen(Long allergenId, AllergenRequest toUpdate) {
+    public AllergenResponse updateAllergen(Long allergenId, NewAllergenRequest toUpdate) {
         return allergenRepository.findById(allergenId)
                 .map(allergen ->{
                     allergen.setAllergenName(toUpdate.allergenName());
                     allergen.setDescription(toUpdate.description());
-                    return AllergenResponse.toAllergenResponse(allergenRepository.save(allergen));
+                    return AllergenResponse.fromAllergen(allergenRepository.save(allergen));
                 }).orElseThrow(()->new AllergenNotFoundException(allergenId));
     }
 
