@@ -89,23 +89,4 @@ public abstract class User implements UserDetails {
                 .toList();
     }
 
-    @Override
-    public boolean isAccountNonExpired() {
-        return accountNonExpired;
-    }
-
-    @Override
-    public boolean isAccountNonLocked() {
-        return accountNonLocked;
-    }
-
-    @Override
-    public boolean isCredentialsNonExpired() {
-        return credentialsNonExpired;
-    }
-
-    @Override
-    public boolean isEnabled() {
-        return enabled;
-    }
 }

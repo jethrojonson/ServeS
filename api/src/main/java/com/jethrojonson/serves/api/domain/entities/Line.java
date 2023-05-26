@@ -1,6 +1,6 @@
 package com.jethrojonson.serves.api.domain.entities;
 
-import com.jethrojonson.serves.api.domain.pk.LinePK;
+import com.jethrojonson.serves.api.domain.pk.LinePk;
 import lombok.*;
 
 import javax.persistence.*;
@@ -16,7 +16,7 @@ import javax.persistence.ForeignKey;
 public class Line {
 
     @EmbeddedId
-    private LinePK id;
+    private LinePk id;
 
     @ManyToOne
     @MapsId("orderId")

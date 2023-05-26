@@ -28,5 +28,9 @@ public class Customer extends User{
     @Builder.Default
     private List<Order> ordersMade = new ArrayList<>();
 
+    @OneToMany(mappedBy = "reviewer")
+    @Builder.Default
+    private List<Review> reviewsMade = new ArrayList<>();
+
 
 }

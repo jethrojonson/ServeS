@@ -14,7 +14,7 @@ import javax.persistence.*;
 public class Allergen {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue
     private Long id;
 
     private String allergenName;

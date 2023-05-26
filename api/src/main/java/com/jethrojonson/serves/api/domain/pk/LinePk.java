@@ -3,8 +3,6 @@ import lombok.*;
 
 import javax.persistence.Embeddable;
 import java.io.Serializable;
-import java.time.LocalDateTime;
-import java.util.UUID;
 
 @Embeddable
 @AllArgsConstructor
@@ -12,7 +10,7 @@ import java.util.UUID;
 @Getter
 @Setter
 @Builder
-public class LinePK implements Serializable {
+public class LinePk implements Serializable {
 
     private int lineNumber;
     private OrderPk orderId;

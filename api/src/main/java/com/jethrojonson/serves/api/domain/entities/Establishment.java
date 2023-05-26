@@ -33,6 +33,10 @@ public class Establishment {
     @Builder.Default
     private List<Order> ordersReceived = new ArrayList<>();
 
+    @OneToMany(mappedBy = "target")
+    @Builder.Default
+    private List<Review> reviewsReceived = new ArrayList<>();
+
     @ManyToOne
     @JoinColumn(
             name = "company_id",

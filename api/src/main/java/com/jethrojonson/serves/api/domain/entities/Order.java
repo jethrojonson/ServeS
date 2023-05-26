@@ -37,7 +37,10 @@ public class Order {
     )
     private Establishment establishment;
 
-    @OneToMany(mappedBy = "order")
+    @OneToMany(
+            mappedBy = "order",
+            cascade = CascadeType.ALL
+    )
     private List<Line> salesLines;
 
     private double totalPrice;
