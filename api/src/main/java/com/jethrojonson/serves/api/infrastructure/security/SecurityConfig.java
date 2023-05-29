@@ -4,6 +4,7 @@ import com.jethrojonson.serves.api.infrastructure.security.jwt.access.JwtAuthent
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.Customizer;
@@ -13,6 +14,7 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
 import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.AuthenticationEntryPoint;
@@ -53,8 +55,8 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception{
         return http
-                    .cors(Customizer.withDefaults())
-                    .csrf().disable()
+                .cors(Customizer.withDefaults())
+                .csrf().disable()
                     .exceptionHandling()
                     .authenticationEntryPoint(jwtAuthenticationEntryPoint)
                     .accessDeniedHandler(jwtAccessDeniedHandler)
@@ -63,6 +65,8 @@ public class SecurityConfig {
                     .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
                     .authorizeRequests()
+                    .antMatchers(HttpMethod.PUT, "/company/{username}").hasRole("COMPANY")
+                    .antMatchers(HttpMethod.PUT, "/customer/{username}").hasRole("CUSTOMER")
                     .anyRequest().authenticated()
                 .and()
                     .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)
@@ -72,12 +76,13 @@ public class SecurityConfig {
     }
 
 
-
     @Bean
     WebSecurityCustomizer webSecurityCustomizer(){
         return (web -> web.ignoring().antMatchers(
                 "/h2-console/**",
-                "/swagger-ui/**", "/v3/api-docs/**"
+                "/swagger-ui/**", "/v3/api-docs/**",
+                "/access/signup", "/access/login"
+//                "/**"
         ));
     }
 

@@ -5,6 +5,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.TransactionScoped;
+import javax.transaction.Transactional;
 import java.time.Instant;
 import java.util.Optional;
 import java.util.UUID;
@@ -37,7 +39,10 @@ public class RefreshTokenService {
             throw new RefreshTokenException("Expired refresh token: " + refreshToken.getToken() + ". Please, login again");
         }
         return refreshToken;
+    }
 
-
+    @Transactional
+    public int deleteByUser(User user){
+        return refreshTokenRepository.deleteByUser(user);
     }
 }

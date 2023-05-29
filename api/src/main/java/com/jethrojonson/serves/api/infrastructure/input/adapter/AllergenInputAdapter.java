@@ -122,8 +122,8 @@ public class AllergenInputAdapter {
             )
     })
     @GetMapping("/")
-    public ResponseEntity<List<AllergenResponse>> getAllAllergens(){
-        return ResponseEntity.ok(allergenInputPort.getAllAllergens());
+    public List<AllergenResponse> getAllAllergens(){
+        return allergenInputPort.getAllAllergens();
     }
 
     @Operation(summary = "Obtains an allergen by id")
@@ -152,8 +152,8 @@ public class AllergenInputAdapter {
             )
     })
     @GetMapping("/{allergenId}")
-    public ResponseEntity<AllergenResponse> getAllergenById(@PathVariable Long allergenId){
-        return ResponseEntity.ok(allergenInputPort.getAllergenById(allergenId));
+    public AllergenResponse getAllergenById(@PathVariable Long allergenId){
+        return allergenInputPort.getAllergenById(allergenId);
     }
 
     @Operation(summary = "Updates an allergen")
@@ -197,8 +197,8 @@ public class AllergenInputAdapter {
             )
     )
     @PutMapping("/{allergenId}")
-    public ResponseEntity<AllergenResponse> updateAllergen(@PathVariable Long allergenId,@Valid @RequestBody NewAllergenRequest toUpdate){
-        return ResponseEntity.ok(allergenInputPort.updateAllergen(allergenId, toUpdate));
+    public AllergenResponse updateAllergen(@PathVariable Long allergenId,@Valid @RequestBody NewAllergenRequest toUpdate){
+        return allergenInputPort.updateAllergen(allergenId, toUpdate);
     }
 
     @Operation(summary = "Deletes an allergen")
