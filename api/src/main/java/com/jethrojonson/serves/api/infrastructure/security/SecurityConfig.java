@@ -36,7 +36,7 @@ public class SecurityConfig {
     private final JwtAuthenticationFilter jwtAuthenticationFilter;
 
     @Bean
-    public AuthenticationManager authenticationManager(HttpSecurity http) throws Exception{
+    public AuthenticationManager authenticationManager(HttpSecurity http) throws Exception {
         AuthenticationManagerBuilder authenticationManagerBuilder =
                 http.getSharedObject(AuthenticationManagerBuilder.class);
         return authenticationManagerBuilder.authenticationProvider(authenticationProvider())
@@ -44,7 +44,7 @@ public class SecurityConfig {
     }
 
     @Bean
-    public DaoAuthenticationProvider authenticationProvider(){
+    public DaoAuthenticationProvider authenticationProvider() {
         DaoAuthenticationProvider authenticationProvider = new DaoAuthenticationProvider();
         authenticationProvider.setUserDetailsService(userDetailsService);
         authenticationProvider.setPasswordEncoder(passwordEncoder);
@@ -53,36 +53,50 @@ public class SecurityConfig {
     }
 
     @Bean
-    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception{
+    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         return http
                 .cors(Customizer.withDefaults())
                 .csrf().disable()
-                    .exceptionHandling()
-                    .authenticationEntryPoint(jwtAuthenticationEntryPoint)
-                    .accessDeniedHandler(jwtAccessDeniedHandler)
+                .exceptionHandling()
+                .authenticationEntryPoint(jwtAuthenticationEntryPoint)
+                .accessDeniedHandler(jwtAccessDeniedHandler)
                 .and()
-                    .sessionManagement()
-                    .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+                .sessionManagement()
+                .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
-                    .authorizeRequests()
-                    .antMatchers(HttpMethod.PUT, "/company/{username}").hasRole("COMPANY")
-                    .antMatchers(HttpMethod.PUT, "/customer/{username}").hasRole("CUSTOMER")
-                    .anyRequest().authenticated()
+                .authorizeRequests()
+                //ADMIN
+                .antMatchers(HttpMethod.POST, "/allergens/").hasRole("ADMIN")
+                .antMatchers(HttpMethod.PUT, "/allergens/{id}").hasRole("ADMIN")
+                .antMatchers(HttpMethod.DELETE, "/allergens/{id}").hasRole("ADMIN")
+                //COMPANY
+                .antMatchers(HttpMethod.PUT, "/company/{username}").hasRole("COMPANY")
+                .antMatchers(HttpMethod.POST, "/company/{username}/products").hasRole("COMPANY")
+                .antMatchers(HttpMethod.GET, "/company/{username}/products").hasRole("COMPANY")
+                .antMatchers(HttpMethod.PUT, "/company/{username}/products/{productId}").hasRole("COMPANY")
+                .antMatchers(HttpMethod.POST, "/company/{username}/categories").hasRole("COMPANY")
+                //CUSTOMER
+                .antMatchers(HttpMethod.PUT, "/customer/{username}").hasRole("CUSTOMER")
+                //ALL
+                .antMatchers(HttpMethod.GET,"/allergens/").permitAll()
+                .antMatchers(HttpMethod.GET,"/allergens/{allergenId}").permitAll()
+
+                .anyRequest().authenticated()
                 .and()
-                    .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)
-                    .headers().frameOptions().disable()
+                .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)
+                .headers().frameOptions().disable()
                 .and()
-                    .build();
+                .build();
     }
 
 
     @Bean
-    WebSecurityCustomizer webSecurityCustomizer(){
+    WebSecurityCustomizer webSecurityCustomizer() {
         return (web -> web.ignoring().antMatchers(
                 "/h2-console/**",
                 "/swagger-ui/**", "/v3/api-docs/**",
                 "/access/signup", "/access/login"
-//                "/**"
+//                ,"/**"
         ));
     }
 

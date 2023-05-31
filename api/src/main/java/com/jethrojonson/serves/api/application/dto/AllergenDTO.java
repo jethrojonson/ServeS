@@ -1,5 +1,6 @@
 package com.jethrojonson.serves.api.application.dto;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.jethrojonson.serves.api.domain.entities.Allergen;
 import lombok.Builder;
 
@@ -23,13 +24,21 @@ public interface AllergenDTO {
 
     @Builder
     public record AllergenResponse(
+            @JsonInclude(JsonInclude.Include.NON_NULL)
             Long id,
             String allergenName,
             String description
     ){
-        public static AllergenResponse fromAllergen(Allergen a){
+        public static AllergenResponse fullFromAllergen(Allergen a){
             return AllergenResponse.builder()
                     .id(a.getId())
+                    .allergenName(a.getAllergenName())
+                    .description(a.getDescription())
+                    .build();
+        }
+
+        public static AllergenResponse simpleFromAllergen(Allergen a){
+            return AllergenResponse.builder()
                     .allergenName(a.getAllergenName())
                     .description(a.getDescription())
                     .build();

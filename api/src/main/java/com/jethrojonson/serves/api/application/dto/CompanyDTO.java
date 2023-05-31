@@ -12,7 +12,7 @@ public interface CompanyDTO {
 
     @Builder
     public record CompanyResponse(
-            String companyOwner,
+            String username,
             String companyName,
             String cif,
             String companyAvatar
@@ -20,7 +20,7 @@ public interface CompanyDTO {
 
         public static CompanyResponse fromCompany(Company c){
             return CompanyResponse.builder()
-                    .companyOwner(c.getUsername())
+                    .username(c.getUsername())
                     .companyName(c.getCompanyName())
                     .cif(c.getCif())
                     .companyAvatar(c.getCompanyAvatar())

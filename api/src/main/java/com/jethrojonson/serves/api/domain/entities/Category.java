@@ -21,18 +21,7 @@ public class Category {
 
     private String categoryName;
 
-    @ManyToMany
-    @JoinTable(
-            name = "PRODUCTS_CATEGORIES",
-            joinColumns = @JoinColumn(
-                    name = "category_id",
-                    foreignKey = @ForeignKey(name = "FK_PRODUCTS_CATEGORIES_TO_CATEGORIES")
-            ),
-            inverseJoinColumns = @JoinColumn(
-                    name = "product_id",
-                    foreignKey = @ForeignKey(name = "FK_PRODUCTS_CATEGORIES_TO_PRODUCTS")
-            )
-    )
+    @ManyToMany(mappedBy = "categories")
     @Builder.Default
     private List<Product> products = new ArrayList<>();
 

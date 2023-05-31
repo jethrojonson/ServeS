@@ -17,7 +17,7 @@ public class AllergenUseCase implements AllergenInputPort {
 
     @Override
     public AllergenResponse addAllergen(NewAllergenRequest toAdd) {
-        return AllergenResponse.fromAllergen(
+        return AllergenResponse.fullFromAllergen(
                 allergenRepository.save(
                         NewAllergenRequest.toAllergen(toAdd)
                 )
@@ -29,14 +29,14 @@ public class AllergenUseCase implements AllergenInputPort {
         if (allergenRepository.findAll().isEmpty())
             throw new EmptyAllergenListException();
         return allergenRepository.findAll().stream()
-                .map(AllergenResponse::fromAllergen)
+                .map(AllergenResponse::simpleFromAllergen)
                 .toList();
     }
 
     @Override
     public AllergenResponse getAllergenById(Long allergenId) {
         return allergenRepository.findById(allergenId)
-                .map(AllergenResponse::fromAllergen)
+                .map(AllergenResponse::fullFromAllergen)
                 .orElseThrow(()-> new AllergenNotFoundException(allergenId));
     }
 
@@ -46,7 +46,7 @@ public class AllergenUseCase implements AllergenInputPort {
                 .map(allergen ->{
                     allergen.setAllergenName(toUpdate.allergenName());
                     allergen.setDescription(toUpdate.description());
-                    return AllergenResponse.fromAllergen(allergenRepository.save(allergen));
+                    return AllergenResponse.fullFromAllergen(allergenRepository.save(allergen));
                 }).orElseThrow(()->new AllergenNotFoundException(allergenId));
     }
 

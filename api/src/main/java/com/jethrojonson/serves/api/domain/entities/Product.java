@@ -21,7 +21,18 @@ public class Product {
 
     private String productName;
 
-    @ManyToMany(mappedBy = "products")
+    @ManyToMany
+    @JoinTable(
+            name = "PRODUCTS_CATEGORIES",
+            joinColumns = @JoinColumn(
+                    name = "product_id",
+                    foreignKey = @ForeignKey(name = "FK_PRODUCTS_CATEGORIES_TO_PRODUCTS")
+            ),
+            inverseJoinColumns = @JoinColumn(
+                    name = "category_id",
+                    foreignKey = @ForeignKey(name = "FK_PRODUCTS_CATEGORIES_TO_CATEGORIES")
+            )
+    )
     @Builder.Default
     private List<Category> categories = new ArrayList<>();
 
@@ -49,4 +60,13 @@ public class Product {
 
     @Builder.Default
     private boolean active = true;
+
+    //HELPERS CATEGORIES//
+    public void addCategories(List<Category> categoriesToAdd){
+        categories.addAll(categoriesToAdd);
+        categoriesToAdd.forEach(c->c.getProducts().add(this));
+    }
+
+    //HELPERS ALLERGENS//
+
 }

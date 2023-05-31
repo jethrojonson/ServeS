@@ -8000,7 +8000,8 @@
 								"$ref": "AAAAAAGIQxxeDZxeJmI="
 							},
 							"name": "companyOwner",
-							"visibility": "private"
+							"visibility": "private",
+							"type": ""
 						}
 					]
 				},
@@ -8153,7 +8154,8 @@
 								"$ref": "AAAAAAGIQx1er57tJ5Y="
 							},
 							"name": "companyOwner",
-							"visibility": "private"
+							"visibility": "private",
+							"type": ""
 						},
 						{
 							"_type": "UMLAttribute",
@@ -8245,7 +8247,8 @@
 								"$ref": "AAAAAAGIQx2TE6Bb9Nw="
 							},
 							"name": "companyOwner",
-							"visibility": "private"
+							"visibility": "private",
+							"type": ""
 						}
 					]
 				},
